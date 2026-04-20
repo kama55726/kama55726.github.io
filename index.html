@@ -361,10 +361,17 @@ h1{
   background:rgba(255,255,255,0.03);
   padding:20px;
   border-radius:20px;
-  transition:0.3s;
+  transition:0.4s cubic-bezier(0.2,0.9,0.4,1.1);
   text-align:center;
+  cursor:pointer;
 }
-.step:hover{transform:translateY(-8px);background:rgba(59,130,246,0.1);}
+
+/* Анимация поднятия для шагов */
+.step:hover{
+  transform:translateY(-8px);
+  background:rgba(59,130,246,0.15);
+  box-shadow:0 15px 30px rgba(59,130,246,0.2);
+}
 
 .step-icon{
   width:50px;
@@ -376,6 +383,11 @@ h1{
   align-items:center;
   justify-content:center;
   font-size:24px;
+  transition:0.3s;
+}
+
+.step:hover .step-icon{
+  transform:scale(1.1);
 }
 
 .step h4{margin:10px 0 5px;font-size:16px;}
@@ -401,29 +413,30 @@ h1{
   font-weight:700;
   background:rgba(255,255,255,0.05);
   border:1px solid var(--glass-border);
-  transition:0.3s;
+  transition:0.4s cubic-bezier(0.2,0.9,0.4,1.1);
   font-size:14px;
 }
 
+/* Анимация поднятия для кнопок приложений */
 .app-btn:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px);
   border-color:var(--primary);
-  background:rgba(59,130,246,0.1);
+  background:rgba(59,130,246,0.15);
+  box-shadow:0 10px 25px rgba(59,130,246,0.2);
 }
 
-/* ВЫДЕЛЕННАЯ КНОПКА HAPP - ЗОЛОТОЙ ФОН + ЗВЕЗДА */
+/* Выделенная кнопка HAPP - золотой фон + звезда */
 .app-btn.popular {
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
   border: 1px solid rgba(255,215,0,0.4);
-  position: relative;
   color: #1a1a2e;
   font-weight: 800;
 }
 
 .app-btn.popular:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   background: linear-gradient(135deg, #fcd34d, #f59e0b);
-  box-shadow: 0 8px 25px rgba(251,191,36,0.4);
+  box-shadow: 0 10px 30px rgba(251,191,36,0.4);
 }
 
 .app-btn.popular i:first-child {
@@ -449,7 +462,7 @@ h1{
 .how-panel{
   max-height:0;
   overflow:hidden;
-  transition:max-height 0.5s ease, padding 0.3s;
+  transition:max-height 0.5s cubic-bezier(0.33,1,0.68,1), padding 0.4s ease;
   background:rgba(255,255,255,0.04);
   border-radius:20px;
   margin-top:15px;
@@ -462,7 +475,7 @@ h1{
   padding:20px;
 }
 
-/* FAQ секция (ВНИЗУ) */
+/* FAQ секция (ВНИЗУ) с ПЛАВНОЙ анимацией */
 .faq-section{
   max-width:900px;
   margin:60px auto 40px;
@@ -491,20 +504,28 @@ h1{
   justify-content:space-between;
   align-items:center;
 }
-.faq-question i{transition:0.3s;}
+.faq-question i{
+  transition:transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
+}
 
-.faq-item.active .faq-question i{transform:rotate(180deg);}
+.faq-item.active .faq-question i{
+  transform:rotate(180deg);
+}
 
+/* Плавная анимация для ответа */
 .faq-answer{
   max-height:0;
   overflow:hidden;
   padding:0 20px;
   color:#cbd5e1;
-  transition:max-height 0.5s cubic-bezier(0.33,1,0.68,1);
+  transition:max-height 0.5s cubic-bezier(0.33,1,0.68,1), padding 0.3s ease, opacity 0.3s ease;
+  opacity:0;
 }
+
 .faq-item.active .faq-answer{
-  max-height:200px;
+  max-height:250px;
   padding:0 20px 18px 20px;
+  opacity:1;
 }
 
 /* Footer */
@@ -618,7 +639,7 @@ h1{
   </div>
 </section>
 
-<!-- Секция "Скачать приложение" с ВЫДЕЛЕННЫМ Happ (золотой фон + звезда) -->
+<!-- Секция "Скачать приложение" с анимацией поднятия кнопок -->
 <section class="instruction-wrap">
   <div class="instruction-card">
     <div class="section-title" style="margin-top:0;">Скачать приложение <i class="fas fa-download"></i></div>
@@ -646,6 +667,7 @@ h1{
   </div>
 </section>
 
+<!-- Секция "Как подключиться" с анимацией поднятия шагов -->
 <section id="instruction" class="instruction-wrap">
   <div class="instruction-card">
     <div class="section-title" style="margin-top:0;">Как подключиться <i class="fas fa-question-circle"></i></div>
@@ -661,7 +683,7 @@ h1{
   </div>
 </section>
 
-<!-- FAQ секция (ВНИЗУ) -->
+<!-- FAQ секция с плавной анимацией закрытия -->
 <section id="faq" class="faq-section">
   <div class="section-title">
     <i class="fas fa-question-circle" style="color:var(--primary);"></i> Часто задаваемые вопросы
@@ -730,7 +752,8 @@ function toggleFaq(el){
 }
 
 function toggleHow(){
-  document.getElementById('howPanel').classList.toggle('show');
+  const panel = document.getElementById('howPanel');
+  panel.classList.toggle('show');
 }
 
 // Анимация появления при скролле
