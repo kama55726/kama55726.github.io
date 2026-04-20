@@ -138,13 +138,12 @@ body{
   100%{transform:translate(50px,50px);}
 }
 
-/* Header - исправлен, кнопки не плывут */
+/* Header — исправлен для мобильных устройств: теперь кнопка всегда видна, навигация адаптивна */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  flex-wrap:nowrap;
-  gap:8px;
+  gap:10px;
   padding:12px 16px;
   position:sticky;
   top:0;
@@ -154,6 +153,7 @@ body{
   border-bottom:1px solid var(--glass-border);
   animation:slideDown 0.6s ease;
   width:100%;
+  flex-wrap:nowrap;
 }
 
 @keyframes slideDown{
@@ -179,7 +179,14 @@ body{
 .nav-links{
   display:flex;
   gap:12px;
-  flex-shrink:0;
+  flex-shrink:1;
+  overflow-x:auto;
+  white-space:nowrap;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.nav-links::-webkit-scrollbar{
+  display:none;
 }
 
 .nav-links a{
@@ -204,6 +211,7 @@ body{
 .nav-links a:hover::after{width:100%;}
 .nav-links a:hover{color:white;}
 
+/* Кнопка Telegram Bot - переименована, не обрезается, всегда видна */
 .tg-btn{
   background:linear-gradient(135deg,#229ED9,#1b8ec6);
   padding:6px 12px;
@@ -213,11 +221,12 @@ body{
   font-weight:800;
   font-size:12px;
   display:flex;
-  gap:4px;
+  gap:6px;
   align-items:center;
   transition:0.3s;
   white-space:nowrap;
   flex-shrink:0;
+  margin-left:auto;
 }
 .tg-btn:active{transform:scale(0.96);}
 
@@ -586,6 +595,28 @@ h1{
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px;}
+
+/* Дополнительная коррекция для очень узких экранов */
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+  .logo {
+    font-size: 15px;
+  }
+  .nav-links {
+    gap: 8px;
+  }
+  .nav-links a {
+    font-size: 11px;
+  }
+  .tg-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+}
 </style>
 </head>
 <body>
@@ -605,7 +636,7 @@ h1{
     <a href="#faq">FAQ</a>
   </div>
   <a class="tg-btn" href="https://t.me/KomaryVpnBot" target="_blank">
-    <i class="fab fa-telegram"></i> Bot
+    <i class="fab fa-telegram"></i> Telegram Bot
   </a>
 </header>
 
